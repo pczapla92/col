@@ -87,7 +87,7 @@ def main():
          file_and_columns_triple])
 
     max_key_len = max((len(key) for key in all_sums), default=15)
-    header_fmt = f"{{:<{max_key_len}}} | {{:>15}}"
+    header_fmt = f"\n{{:<{max_key_len}}} | {{:>15}}"
     row_fmt = f"{{:<{max_key_len}}} | {{:>15.2f}}"
 
     print(header_fmt.format("Group Key", "Amount"))

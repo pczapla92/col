@@ -14,7 +14,7 @@ def clean_and_extract_csv(file_path):
 
         for i, row in enumerate(reader, start=2):  # Start from line 2 (after header)
             if len(row) < 10:
-                print(f"[Line {i}] Skipped: not enough columns")
+                print(f"[Line {i}] Skipped: not enough columns: {row}")
                 continue
 
             if "otwarcie lokaty" in row[6].lower():
@@ -27,13 +27,13 @@ def clean_and_extract_csv(file_path):
 
             if group.startswith("Numer telefonu: "):
                 group = row[8]
-                print(f"[Line {i}] Swapped column 8 -> 9 due to 'Numer telefonu:' | New group: '{group}'")
+                print(f"[Line {i}] Swapped column 8 -> 9 due to 'Numer telefonu:' | New group: '{group}'") # blik payment
 
             if "bankomat" in row[9].lower():
                 group = "bankomat"
                 print(f"[Line {i}] Overwritten group to 'bankomat' due to 'bankomat' in column 10")
 
-            cleaned_group = group.replace("Lokalizacja: Adres: ", "").replace("Nazwa odbiorcy: ", "")
+            cleaned_group = group.replace("Lokalizacja: Adres: ", "").replace("Nazwa odbiorcy: ", "").replace("Nazwa nadawcy: ", "")
 
             # print(f"[Line {i}] Final row → Group: '{cleaned_group}', Amount: '{amount}'")
 
@@ -56,7 +56,7 @@ def clean_and_extract_csv(file_path):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python extract_csv.py <file1.csv> <file2.csv> ...")
+        print("Usage: python preprocess_pkobp.py <file1.csv> <file2.csv> ...")
     else:
         for file_path in sys.argv[1:]:
             clean_and_extract_csv(file_path)

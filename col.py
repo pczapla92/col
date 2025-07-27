@@ -18,7 +18,6 @@ try:
         ignored_records = [item for row in reader for item in row]
 except FileNotFoundError:
     print(f"Ignored records file not found: {ignored_path}")
-    pass
 # Read 'mapping.csv' file that resides in the same directory as the script (if present).
 # Each line in mapping.csv should contain two columns separated by a comma:
 #   - First column: a keyword to match in the original group key (case-insensitive substring match)
@@ -33,7 +32,6 @@ try:
         mapping = [(k.lower(), v) for k, v in reader if k and v]
 except FileNotFoundError:
     print(f"Mapping file not found: {mapping_path}")
-    pass
 
 
 def parse_csv_file(filepath, group_col_index, amount_col_index):
@@ -78,7 +76,7 @@ def merge_dicts(dicts):
 def main():
     parser = argparse.ArgumentParser(description="Sum and group expenses.")
     parser.add_argument('args', metavar='ARG', nargs='+',
-                        help='CSV files (e.g. done/may.csv).')
+                        help='CSV files (e.g. preprocessed/may.csv).')
     parsed = parser.parse_args()
 
     file_and_columns_triple = [(parsed.args[i], 0, 1) for i in range(0, len(parsed.args))]
@@ -93,13 +91,21 @@ def main():
     print(header_fmt.format("Group Key", "Amount"))
     print("-" * (max_key_len + 20))
     total = 0.0
+    plus = 0.0
+    minus = 0.0
     for key, amount in sorted(all_sums.items(), key=lambda x: x[1]):
         print(row_fmt.format(key, amount))
+        if amount > 0:
+            plus += amount
+        else:
+            minus += amount
         total += amount
 
     print("-" * (max_key_len + 20))
+    print(row_fmt.format("     PLUS", plus))
+    print(row_fmt.format("     MINUS", minus))
+    print("-" * (max_key_len + 20))
     print(row_fmt.format("TOTAL", total))
-
 
 if __name__ == "__main__":
     main()

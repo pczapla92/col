@@ -1,0 +1,2 @@
+#!/bin/bash
+cat mapping | grep "$1" | cut -d , -f 1

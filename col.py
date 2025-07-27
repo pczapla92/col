@@ -76,7 +76,7 @@ def merge_dicts(dicts):
 def main():
     parser = argparse.ArgumentParser(description="Sum and group expenses.")
     parser.add_argument('args', metavar='ARG', nargs='+',
-                        help='CSV files (e.g. preprocessed/may.csv).')
+                        help='CSV files (e.g. .preprocessed/may.csv).')
     parsed = parser.parse_args()
 
     file_and_columns_triple = [(parsed.args[i], 0, 1) for i in range(0, len(parsed.args))]

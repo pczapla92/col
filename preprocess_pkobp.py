@@ -42,7 +42,7 @@ def clean_and_extract_csv(file_path):
     # Prepare output
     original_filename = os.path.basename(file_path)
     script_dir = os.path.dirname(os.path.realpath(__file__))
-    output_dir = os.path.join(script_dir, "preprocessed")
+    output_dir = os.path.join(script_dir, ".preprocessed")
     os.makedirs(output_dir, exist_ok=True)
 
     output_path = os.path.join(output_dir, original_filename)
@@ -51,7 +51,7 @@ def clean_and_extract_csv(file_path):
         writer = csv.writer(outfile)
         writer.writerows(extracted_rows)
 
-    print(f"\nExtracted file written to: {output_path}")
+    print(f"\nExtracted file written to: {output_path}\n")
 
 
 if __name__ == "__main__":

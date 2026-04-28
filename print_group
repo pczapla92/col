@@ -1,2 +1,2 @@
 #!/bin/bash
-cat mapping | grep "$1" | cut -d , -f 1
+grep "$1" "$(dirname "$0")/mapping" | cut -d, -f1
